@@ -1,5 +1,10 @@
 import { Request, Response } from "express"
-import { req } from "express/lib/response"
+import User from '../models/user_model'
+
+interface RegisterRequestBody {
+    email: string;
+    // Add other properties if needed
+}
 
 const login = async(req : Request , res: Response ) =>{
     res.send("success")
@@ -10,6 +15,8 @@ const logout = async(req: Request, res: Response) =>{
 }
 
 const register = async(req: Request, res: Response) =>{
+    
+    
     res.send("registered")
 }
 
