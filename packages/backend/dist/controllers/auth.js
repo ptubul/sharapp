@@ -8,7 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const zuser_model_1 = __importDefault(require("../models/zuser_model"));
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send("success");
 });
@@ -16,6 +20,14 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send("logout");
 });
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = { "email": "asdexample.com", "password": "11234" };
+    try {
+        const checkedUser = zuser_model_1.default.parse(user);
+        // await User.create(checkedUser)
+    }
+    catch (error) {
+        console.log(error.message[0].message);
+    }
     res.send("registered");
 });
 exports.default = {

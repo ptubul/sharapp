@@ -4,21 +4,32 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx tsc && nodemon ./dist/server.js"
+    "lint": "eslint src/**",
+    "test": "npm run lint",
+    "start": "npx tsc && nodemon ./dist/server.js",
+    "dev": "nodemon ./src/server.ts",
+    "debug": "nodemon --exec \"node --inspect=0.0.0.0:9229 --require ts-node/register ./src/server.ts\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/body-parser": "^1.19.5",
     "nodemon": "^3.1.0",
-    "typescript": "^5.4.5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "@eslint/js": "^9.2.0",
+    "eslint": "^8.57.0",
+    "globals": "^15.2.0",
+    "typescript-eslint": "^7.8.0"
   },
   "dependencies": {
     "@types/express": "github:types/express",
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongoose": "^8.3.3"
+    "express-serve-static-core": "^0.1.1",
+    "mongoose": "^8.3.3",
+    "zod": "^3.23.7"
   }
 }
