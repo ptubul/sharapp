@@ -1,6 +1,6 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document } from "mongoose";
 
-interface UserModel extends Document {
+export interface UserModel extends Document {
   email: string;
   password: string;
 }
@@ -8,10 +8,10 @@ interface UserModel extends Document {
 // Define schema for User model
 const userSchema = new Schema<UserModel>({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
 });
 
 // Create and export User model
-const User = model<UserModel>('User', userSchema);
+const User = model<UserModel>("User", userSchema);
 
 export default User;
