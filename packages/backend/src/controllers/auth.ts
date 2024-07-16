@@ -62,6 +62,13 @@ const genTokens = async (user: UserModel) => {
     { _id: user._id },
     process.env.JWT_REFRESH_SECRET as Secret
   );
+  if (user.refreshTokens == null) {
+    user.refreshTokens = [refreshToken];
+  } else {
+    user.refreshTokens.push(refreshToken);
+  }
+
+  await user.save();
   return { accessToken, refreshToken };
 };
 
