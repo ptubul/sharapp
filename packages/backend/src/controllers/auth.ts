@@ -1,4 +1,4 @@
-import { Request, Response } from "express-serve-static-core";
+import { Request, Response } from "express";
 import User, { UserModel } from "../models/user_model";
 import { MongooseError } from "mongoose";
 import bcrypt from "bcrypt";
