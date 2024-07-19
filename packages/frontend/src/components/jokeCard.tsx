@@ -12,7 +12,7 @@ interface JokeCardProps {
 export default function JokeCard({ joke }: JokeCardProps) {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+      <CardActionArea href={`/joke/${joke.id}`}>
         <CardMedia component="img" height="190" image={joke.image} alt="joke" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
