@@ -27,7 +27,7 @@ export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
         display: isSingle ? "flex" : "block",
         justifyContent: isSingle ? "center" : "initial",
         alignItems: isSingle ? "center" : "initial",
-        marginTop: isSingle ? 5 : 0,
+        marginTop: isSingle ? 5 : 0.5,
         width: 700,
       }}
     >
