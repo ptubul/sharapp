@@ -1,7 +1,7 @@
 export interface Joke {
-  id: string;
-  title: string;
-  text: string;
+  id: string | null;
+  title?: string;
+  text?: string;
   image?: string;
 }
 
