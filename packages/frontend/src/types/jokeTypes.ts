@@ -1,8 +1,9 @@
 export interface Joke {
-  id: string | null;
+  _id: string | null;
   title?: string;
   text?: string;
-  image?: string;
+  url?: string;
+  image?: File | null;
 }
 
 export interface Jokes {

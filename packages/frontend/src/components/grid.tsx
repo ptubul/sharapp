@@ -18,7 +18,7 @@ export default function BasicGrid({ jokes }: Jokes) {
     <Box sx={{ width: "100%", marginY: 3 }}>
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {jokes.map((joke) => (
-          <Grid xs={3} key={joke.id}>
+          <Grid xs={3} key={joke._id}>
             <Item>
               <JokeCard joke={joke} />
             </Item>

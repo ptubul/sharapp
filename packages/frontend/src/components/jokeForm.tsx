@@ -11,6 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { Joke } from "../types/jokeTypes";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -24,11 +25,18 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export default function JokeForm() {
+interface HandlerProps {
+  submitHandler: (joke: Joke) => void;
+}
+
+export default function JokeForm({ submitHandler }: HandlerProps) {
   const imgPlaceholder = "https://via.placeholder.com/300x200";
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [imageUrl, setImageUrl] = React.useState(imgPlaceholder);
+  const [title, setTitle] = React.useState("");
+  const [jokeText, setJokeText] = React.useState("");
+  const jokeId = "111111111";
 
   const handleRemoveClick = () => {
     setImageUrl(imgPlaceholder);
@@ -73,9 +81,15 @@ export default function JokeForm() {
             const formJson = Object.fromEntries(
               (formData as FormData).entries()
             );
-            console.log(formJson.text, formJson.rating);
-            // const email = formJson.text;
-            // console.log(formJson.simpleControlled, email);
+
+            const newJoke: Joke = {
+              id: jokeId,
+              text: formJson.text.toString(),
+              title: formJson.title.toString(),
+              image: file,
+            };
+            console.log(newJoke.text);
+            submitHandler(newJoke);
             handleClose();
           },
         }}

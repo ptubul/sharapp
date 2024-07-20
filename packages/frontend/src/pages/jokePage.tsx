@@ -31,7 +31,7 @@ const JokePage = () => {
   return (
     <>
       <Header />
-      <JokeCard joke={{ id: jokeId ? jokeId : null }} isSingle={true} />
+      <JokeCard joke={{ _id: jokeId ? jokeId : null }} isSingle={true} />
       <CommentForm submitHandler={addCommentHandler} />
       <CommentsList comments={jokeComments} />
     </>

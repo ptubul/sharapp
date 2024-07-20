@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import Post from "../models/post_model";
 import { AuthResquest } from "../middlewares/auth_middleware";
 
-const addPost = async (req: AuthResquest, res: Response) => {
+const addPost = async (req: Request, res: Response) => {
   let imgUrl: string | null = null;
-
+  console.log(req.body);
   if (req.file) {
     imgUrl = `${req.file.path}`;
     imgUrl = imgUrl.replace(/\\/g, "/");
@@ -13,7 +13,8 @@ const addPost = async (req: AuthResquest, res: Response) => {
   await Post.create({
     title: req.body.title,
     text: req.body.text,
-    owner: req.user?._id,
+    // owner: req.user?._id,
+    owner: "111111111111111",
     url: imgUrl,
   });
 
@@ -48,8 +49,14 @@ const deletePost = async (req: AuthResquest, res: Response) => {
   }
 };
 
+const getAllPosts = async (req: Request, res: Response) => {
+  const allPost = await Post.find({});
+  res.status(200).send(allPost);
+};
+
 export default {
   addPost,
   deletePost,
   updatePost,
+  getAllPosts,
 };
