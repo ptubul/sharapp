@@ -15,21 +15,21 @@ const JokePage = () => {
     { id: "4", text: "blablbablyyyyyyyyyyyyyya", rate: 2, owner: "bbb" },
     { id: "5", text: "blablbayyyyyyyyyyyyybla", rate: 1, owner: "aaa" },
   ]);
-  const addCommentHandler = () => {
+  const addCommentHandler = (commentText: string, rating: number) => {
     //   // call api for add comment
-    //   const newComment: Comment = {
-    //     id: "1234",
-    //     owner: "avvv",
-    //     rate: rating,
-    //     text: commentText,
-    //   };
-    //   setJokeComments((prevState) => [...prevState, newComment]);
+    const newComment: Comment = {
+      id: "1234",
+      owner: "avvv",
+      rate: rating,
+      text: commentText,
+    };
+    setJokeComments((prevState) => [...prevState, newComment]);
   };
   return (
     <>
       <Header />
       <JokeCard joke={{ id: jokeId ? jokeId : null }} isSingle={true} />
-      <CommentForm />
+      <CommentForm submitHandler={addCommentHandler} />
       <CommentsList comments={jokeComments} />
     </>
   );

@@ -71,6 +71,7 @@ export default function JokeForm() {
             label="Your joke"
             type="input"
             fullWidth
+            multiline
             variant="standard"
           />
         </DialogContent>

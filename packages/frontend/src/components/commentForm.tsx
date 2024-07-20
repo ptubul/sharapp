@@ -9,13 +9,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import { Rating, Typography } from "@mui/material";
-// import { CommentHandler } from "../types/commentTypes";
 
-// interface handlerProps {
-//   submitHandler: React.FC<CommentHandler>;
-// }
+interface HandlerProps {
+  submitHandler: (commentText: string, rating: number) => void;
+}
 
-export default function CommentForm() {
+export default function CommentForm({ submitHandler }: HandlerProps) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -45,9 +44,7 @@ export default function CommentForm() {
             const formJson = Object.fromEntries(
               (formData as FormData).entries()
             );
-            console.log(formJson.text, formJson.rating);
-            // const email = formJson.text;
-            // console.log(formJson.simpleControlled, email);
+            submitHandler(formJson.text.toString(), Number(formJson.rating));
             handleClose();
           },
         }}
