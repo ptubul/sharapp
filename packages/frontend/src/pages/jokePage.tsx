@@ -5,9 +5,11 @@ import CommentsList from "../components/commentList";
 import CommentForm from "../components/commentForm";
 import { Comment } from "../types/commentTypes";
 import React from "react";
+import { useCurrentUser } from "../context/CurrentUserContext";
 
 const JokePage = () => {
   const { jokeId } = useParams();
+  const { currentUser } = useCurrentUser();
   const [jokeComments, setJokeComments] = React.useState<Comment[]>([
     { id: "1", text: "blablbabla", rate: 3, owner: "avi" },
     { id: "2", text: "blabldsaaaaaababla", rate: 3, owner: "asd" },
@@ -17,9 +19,10 @@ const JokePage = () => {
   ]);
   const addCommentHandler = (commentText: string, rating: number) => {
     //   // call api for add comment
+
     const newComment: Comment = {
       id: "1234",
-      owner: "avvv",
+      owner: currentUser?.name,
       rate: rating,
       text: commentText,
     };

@@ -2,6 +2,7 @@ import HomePage from "./pages/homePage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import JokePage from "./pages/jokePage";
 import MyJokesPage from "./pages/myJokesPage";
+import { CurrentUserProvider } from "./context/CurrentUserContext";
 
 const router = createBrowserRouter([
   {
@@ -17,9 +18,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
+    <CurrentUserProvider>
+      <div>
+        <RouterProvider router={router} />
+      </div>
+    </CurrentUserProvider>
   );
 }
 

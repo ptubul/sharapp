@@ -4,20 +4,51 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Fab from "@mui/material/Fab";
+import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/Add";
-import { Typography } from "@mui/material";
-// import { CommentHandler } from "../types/commentTypes";
+import { styled } from "@mui/material/styles";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-// interface handlerProps {
-//   submitHandler: React.FC<CommentHandler>;
-// }
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 export default function JokeForm() {
+  const imgPlaceholder = "https://via.placeholder.com/300x200";
   const [open, setOpen] = React.useState(false);
+  const [file, setFile] = React.useState<File | null>(null);
+  const [imageUrl, setImageUrl] = React.useState(imgPlaceholder);
 
+  const handleRemoveClick = () => {
+    setImageUrl(imgPlaceholder);
+    setFile(null);
+  };
+
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const uploadedFile = event.target.files?.[0] || null;
+    setFile(uploadedFile);
+    console.log(uploadedFile);
+    if (uploadedFile) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        reader.result?.toString()
+          ? setImageUrl(reader.result?.toString())
+          : null;
+      };
+      reader.readAsDataURL(uploadedFile);
+    }
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -74,7 +105,34 @@ export default function JokeForm() {
             multiline
             variant="standard"
           />
+          <Box
+            component="img"
+            sx={{
+              width: 300,
+              height: 200,
+              objectFit: "cover",
+              borderRadius: 2,
+            }}
+            alt="Example Image"
+            src={imageUrl}
+          />
+          <Fab color="error" aria-label="add" onClick={handleRemoveClick}>
+            <HighlightOffIcon />
+          </Fab>
+          <div>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+            >
+              Upload file
+              <VisuallyHiddenInput type="file" onChange={handleUploadImage} />
+            </Button>
+          </div>
         </DialogContent>
+
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button type="submit"> save</Button>
