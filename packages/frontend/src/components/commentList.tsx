@@ -14,9 +14,10 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 interface CommentsListProps {
-  comments: Comment[] | undefined;
+  comments: Comment[];
 }
-export default function CommentsList({ comments = [] }: CommentsListProps) {
+export default function CommentsList({ comments }: CommentsListProps) {
+  console.log(comments);
   return (
     <Box sx={{ width: "70%" }}>
       <Stack spacing={2}>

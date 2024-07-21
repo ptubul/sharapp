@@ -6,7 +6,7 @@ export interface Joke {
   text?: string;
   url?: string;
   image?: File | null;
-  comments?: Comment[];
+  comments: Comment[];
 }
 
 export interface Jokes {

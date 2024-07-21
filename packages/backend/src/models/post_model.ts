@@ -13,7 +13,7 @@ export interface PostModel extends Document {
   title: string;
   text: string;
   url?: string;
-  commments?: CommentModel[];
+  comments: CommentModel[];
 }
 
 const commentSchema = new Schema<CommentModel>({
@@ -29,7 +29,7 @@ const postSchema = new Schema<PostModel>({
   title: { type: String, required: true },
   text: { type: String, required: true },
   url: { type: String, required: false },
-  commments: { type: [commentSchema], required: false },
+  comments: { type: [commentSchema], required: false },
 });
 
 const Post = model<PostModel>("Post", postSchema);

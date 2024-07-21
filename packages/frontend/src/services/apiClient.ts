@@ -29,13 +29,13 @@ axiosInstance.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshToken = localStorage.getItem("refresh_token");
+        const refreshToken = localStorage.getItem("refreshToken");
         const response = await axios.post("http://localhost/auth/refresh", {
           refresh_token: refreshToken,
         });
 
         const newAccessToken = response.data.access_token;
-        localStorage.setItem("access_token", newAccessToken);
+        localStorage.setItem("accessToken", newAccessToken);
 
         // Set the new access token to the original request headers
         axiosInstance.defaults.headers.common[

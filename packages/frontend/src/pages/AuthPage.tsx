@@ -1,7 +1,5 @@
 // src/AuthPage.tsx
 import React, { useState, ChangeEvent } from "react";
-// import { auth, googleProvider } from "./firebase-config";
-// import { signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {
   Box,
   Button,
@@ -11,13 +9,22 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Google as GoogleIcon } from "@mui/icons-material";
-import { loginBasic, registerBasic } from "../services/userServices";
+
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import {
+  loginBasic,
+  loginGoogle,
+  registerBasic,
+} from "../services/userServices";
+import { useAuth } from "../context/CurrentUserContext";
+import { useNavigate } from "react-router-dom";
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { login, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setIsLogin(newValue === 0);
@@ -33,7 +40,9 @@ const AuthPage: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      await loginBasic(email, password);
+      const { userId, userName } = await loginBasic(email, password);
+      login(userId, userName);
+      navigate("/");
       alert("Logged in successfully!");
     } catch (error) {
       if (error instanceof Error) {
@@ -53,9 +62,15 @@ const AuthPage: React.FC = () => {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleError = async () => {
+    console.log("error in google login");
+  };
+
+  const handleGoogleLogin = async (credentialResponse: CredentialResponse) => {
     try {
-      //   await signInWithPopup(auth, googleProvider);
+      const { userId, userName } = await loginGoogle(credentialResponse);
+      login(userId, userName);
+      navigate("/");
       alert("Logged in with Google!");
     } catch (error) {
       if (error instanceof Error) {
@@ -119,16 +134,10 @@ const AuthPage: React.FC = () => {
               Register
             </Button>
           )}
-          <Button
-            variant="outlined"
-            color="primary"
-            fullWidth
-            onClick={handleGoogleLogin}
-            startIcon={<GoogleIcon />}
-            sx={{ mt: 2 }}
-          >
-            Login with Google
-          </Button>
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={handleGoogleError}
+          />
         </Box>
       </Box>
     </Container>

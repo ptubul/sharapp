@@ -4,6 +4,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box, CardActionArea } from "@mui/material";
 import { Joke } from "../types/jokeTypes";
+import { useNavigate } from "react-router-dom";
 
 interface JokeCardProps {
   joke: Joke;
@@ -11,6 +12,7 @@ interface JokeCardProps {
 }
 
 export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
+  const navigate = useNavigate();
   // ? {
   //     title: "aaa",
   //     text: "bbbbb",
@@ -19,8 +21,6 @@ export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
   //       "https://play-lh.googleusercontent.com/kCuoLGcYqdmZN_TvKVYrUjuF2C8uua2rfY83anNJw7YGzijReQc3yTlsqzvMdxs03IM=w240-h480-rw",
   //   }
   // : joke;
-
-  console.log(joke.title);
 
   return (
     <Box
@@ -37,7 +37,7 @@ export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
           maxWidth: 345,
         }}
       >
-        <CardActionArea href={`/joke/${joke._id}`}>
+        <CardActionArea onClick={() => navigate(`/joke/${joke._id}`)}>
           <CardMedia component="img" height="190" image={joke.url} alt="joke" />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -46,7 +46,6 @@ export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
             <Typography variant="body2" color="text.secondary">
               {joke.text}
             </Typography>
-            {joke.comments && <Typography>{joke.comments[0].owner}</Typography>}
           </CardContent>
         </CardActionArea>
       </Card>

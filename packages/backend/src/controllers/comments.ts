@@ -6,8 +6,8 @@ const addComment = async (req: Request, res: Response) => {
   const editedPost = await Post.findById({ _id: req.body.postId });
 
   const comment: CommentModel = { ...req.body.comment, _id: uuidv4() };
-  editedPost?.commments?.push(comment);
-  console.log(editedPost?.commments);
+  editedPost?.comments.push(comment);
+  console.log(editedPost?.comments);
   try {
     editedPost?.save();
 

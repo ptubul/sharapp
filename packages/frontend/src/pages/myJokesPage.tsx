@@ -13,8 +13,8 @@ const MyJokesPage = () => {
       text: "bbbbb",
       _id: "1",
       url: "https://play-lh.googleusercontent.com/kCuoLGcYqdmZN_TvKVYrUjuF2C8uua2rfY83anNJw7YGzijReQc3yTlsqzvMdxs03IM=w240-h480-rw",
+      comments: [],
     },
-    { title: "assss", text: "bbbbb", _id: "2" },
   ]);
 
   useEffect(() => {
