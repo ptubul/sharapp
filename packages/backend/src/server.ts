@@ -5,6 +5,7 @@ import express from "express";
 import authRouter from "./routes/auth_routes";
 import mongoose from "mongoose";
 import postsRouter from "./routes/posts_routes";
+import commentsRouter from "./routes/comments_routes";
 import upload from "./middlewares/multer";
 import cors from "cors";
 
@@ -31,5 +32,6 @@ mongoose.connect(url).then(() => {
   app.use(cors(corsOptions));
   app.use("/auth", authRouter);
   app.use("/posts", postsRouter);
+  app.use("/comments", commentsRouter);
   app.listen(3000, () => console.log("app is listening"));
 });

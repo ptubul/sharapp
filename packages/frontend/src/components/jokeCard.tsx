@@ -11,15 +11,16 @@ interface JokeCardProps {
 }
 
 export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
-  const jokeData = isSingle
-    ? {
-        title: "aaa",
-        text: "bbbbb",
-        id: "3",
-        image:
-          "https://play-lh.googleusercontent.com/kCuoLGcYqdmZN_TvKVYrUjuF2C8uua2rfY83anNJw7YGzijReQc3yTlsqzvMdxs03IM=w240-h480-rw",
-      }
-    : joke;
+  // ? {
+  //     title: "aaa",
+  //     text: "bbbbb",
+  //     _id: "3",
+  //     image:
+  //       "https://play-lh.googleusercontent.com/kCuoLGcYqdmZN_TvKVYrUjuF2C8uua2rfY83anNJw7YGzijReQc3yTlsqzvMdxs03IM=w240-h480-rw",
+  //   }
+  // : joke;
+
+  console.log(joke.title);
 
   return (
     <Box
@@ -36,20 +37,16 @@ export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
           maxWidth: 345,
         }}
       >
-        <CardActionArea href={`/joke/${joke.id}`}>
-          <CardMedia
-            component="img"
-            height="190"
-            image={jokeData.image}
-            alt="joke"
-          />
+        <CardActionArea href={`/joke/${joke._id}`}>
+          <CardMedia component="img" height="190" image={joke.url} alt="joke" />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {jokeData.title || "aaaaaaaaaaaaa"}
+              {joke.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {jokeData.text}
+              {joke.text}
             </Typography>
+            {joke.comments && <Typography>{joke.comments[0].owner}</Typography>}
           </CardContent>
         </CardActionArea>
       </Card>

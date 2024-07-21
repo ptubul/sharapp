@@ -14,14 +14,14 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 interface CommentsListProps {
-  comments: Comment[];
+  comments: Comment[] | undefined;
 }
-export default function CommentsList({ comments }: CommentsListProps) {
+export default function CommentsList({ comments = [] }: CommentsListProps) {
   return (
     <Box sx={{ width: "70%" }}>
       <Stack spacing={2}>
         {comments.map((comment) => (
-          <Item key={comment.id}>
+          <Item key={comment._id}>
             <CommentItem comment={{ ...comment }} />
           </Item>
         ))}

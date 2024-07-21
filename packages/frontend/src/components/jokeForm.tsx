@@ -83,12 +83,11 @@ export default function JokeForm({ submitHandler }: HandlerProps) {
             );
 
             const newJoke: Joke = {
-              id: jokeId,
+              _id: jokeId,
               text: formJson.text.toString(),
               title: formJson.title.toString(),
               image: file,
             };
-            console.log(newJoke.text);
             submitHandler(newJoke);
             handleClose();
           },

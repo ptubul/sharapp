@@ -26,7 +26,6 @@ const HomePage = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       const givenJokes = await getAllJokes();
-      console.log(givenJokes);
       setJokes(givenJokes);
     };
 

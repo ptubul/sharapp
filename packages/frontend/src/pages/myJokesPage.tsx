@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import BasicGrid from "../components/grid";
 import JokeForm from "../components/jokeForm";
@@ -16,9 +16,13 @@ const MyJokesPage = () => {
     },
     { title: "assss", text: "bbbbb", _id: "2" },
   ]);
-  const addJokeHandler = (joke: Joke) => {
-    console.log(joke);
-    createJoke(joke);
+
+  useEffect(() => {
+    // create an api
+  }, [jokes]);
+
+  const addJokeHandler = async (joke: Joke) => {
+    await createJoke(joke);
     setJokes((prevState) => [...prevState, joke]);
   };
 

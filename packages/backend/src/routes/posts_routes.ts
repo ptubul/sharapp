@@ -7,6 +7,7 @@ const router = Router();
 router.post("/", posts.addPost);
 router.delete("/:id", authMiddleware, posts.deletePost);
 router.put("/:id", authMiddleware, posts.updatePost);
+router.get("/:id", posts.getPost);
 router.get("/", posts.getAllPosts);
 
 export default router;

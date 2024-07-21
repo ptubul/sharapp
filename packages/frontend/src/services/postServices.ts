@@ -16,4 +16,9 @@ const getAllJokes = async (): Promise<Joke[]> => {
   return response.data;
 };
 
-export { createJoke, getAllJokes };
+const getJoke = async (jokeId: string): Promise<Joke> => {
+  const response = await axiosInstance.get(`/posts/${jokeId}`);
+  return response.data;
+};
+
+export { createJoke, getAllJokes, getJoke };

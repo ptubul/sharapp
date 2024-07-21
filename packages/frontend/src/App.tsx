@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import JokePage from "./pages/jokePage";
 import MyJokesPage from "./pages/myJokesPage";
 import { CurrentUserProvider } from "./context/CurrentUserContext";
+import AuthPage from "./pages/AuthPage";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
     path: "/joke/:jokeId",
     element: <JokePage />,
   },
+  { path: "/login", element: <AuthPage /> },
 ]);
 
 function App() {

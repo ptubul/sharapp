@@ -51,7 +51,15 @@ const deletePost = async (req: AuthResquest, res: Response) => {
 
 const getAllPosts = async (req: Request, res: Response) => {
   const allPost = await Post.find({});
-  res.status(200).send(allPost);
+  return res.status(200).send(allPost);
+};
+
+const getPost = async (req: Request, res: Response) => {
+  const specPost = await Post.findOne({
+    _id: req.params.id,
+  });
+  console.log(specPost);
+  return res.status(200).send(specPost);
 };
 
 export default {
@@ -59,4 +67,5 @@ export default {
   deletePost,
   updatePost,
   getAllPosts,
+  getPost,
 };
