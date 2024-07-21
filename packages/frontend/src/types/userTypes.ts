@@ -1,7 +1,4 @@
-export interface userData {
-  email: string;
-  password: string;
-  name: string;
-  imgPath: string;
-  refreshTokens: string;
+export interface UserData {
+  data: { email: string; password: string; name: string; imgPath: string };
+  image: File;
 }

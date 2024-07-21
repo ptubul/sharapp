@@ -38,6 +38,7 @@ export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
         }}
       >
         <CardActionArea onClick={() => navigate(`/joke/${joke._id}`)}>
+          <Typography>{joke.owner}:</Typography>
           <CardMedia component="img" height="190" image={joke.url} alt="joke" />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -46,6 +47,7 @@ export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
             <Typography variant="body2" color="text.secondary">
               {joke.text}
             </Typography>
+            <Typography>{joke.comments.length} comments</Typography>
           </CardContent>
         </CardActionArea>
       </Card>

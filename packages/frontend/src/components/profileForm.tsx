@@ -13,7 +13,8 @@ import {
 import { PhotoCamera, Delete } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { useAuth } from "../context/CurrentUserContext";
-import { getUser } from "../services/userServices";
+import { getUser, updateUser } from "../services/userServices";
+import { useNavigate } from "react-router-dom";
 const Input = styled("input")({
   display: "none",
 });
@@ -23,6 +24,7 @@ const ProfileForm: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("user@example.com");
   const [avatar, setAvatar] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,8 +55,9 @@ const ProfileForm: React.FC = () => {
     setAvatar(null);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Save logic here
+    await updateUser({ data: { email: email, name: name }, image: avatar });
     console.log("Saved", { name, email, avatar });
   };
 
@@ -62,6 +65,7 @@ const ProfileForm: React.FC = () => {
     // Reset to initial state or fetch current data again
     setName("");
     setAvatar(null);
+    navigate("/");
   };
 
   return (

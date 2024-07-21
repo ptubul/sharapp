@@ -12,7 +12,7 @@ const getUser = async (req: AuthResquest, res: Response) => {
 
 const updateUser = async (req: AuthResquest, res: Response) => {
   const updatedUser = req.body;
-
+  console.log(updatedUser);
   // take the image of user if exist from the storage and return the object
   return res.status(200);
 };

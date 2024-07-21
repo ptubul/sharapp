@@ -5,6 +5,7 @@ export interface Joke {
   title?: string;
   text?: string;
   url?: string;
+  owner: string;
   image?: File | null;
   comments: Comment[];
 }

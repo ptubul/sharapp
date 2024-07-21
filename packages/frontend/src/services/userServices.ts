@@ -1,3 +1,4 @@
+import { Email } from "@mui/icons-material";
 import { userData } from "../types/userTypes";
 import axiosInstance from "./apiClient";
 import { CredentialResponse } from "@react-oauth/google";
@@ -32,8 +33,25 @@ const loginGoogle = async (
 };
 
 const getUser = async (): Promise<userData> => {
-  const user = await axiosInstance("/user");
+  const user = await axiosInstance.get("/user");
   return user.data;
 };
 
-export { loginBasic, registerBasic, loginGoogle, getUser };
+const updateUser = async (userData: userData): Promise<userData> => {
+  const formData = new FormData();
+  formData.append("image", userData.image);
+  formData.append(
+    "json",
+    JSON.stringify({
+      data: { email: userData.email, name: userData.name },
+    })
+  );
+  const user = await axiosInstance.put("/user", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return user.data;
+};
+
+export { loginBasic, registerBasic, loginGoogle, getUser, updateUser };
