@@ -1,64 +1,9 @@
-// import React, { createContext, useContext, useState, ReactNode } from "react";
-
-// // Define the User type
-// type User = {
-//   id: number;
-//   name: string;
-//   url: string;
-// };
-
-// // Define the context type
-// type CurrentUserContextType = {
-//   currentUser: User;
-//   fetchCurrentUser: () => Promise<void>;
-// };
-
-// // Create the context with a default value
-// export const CurrentUserContext = createContext<
-//   CurrentUserContextType | undefined
-// >(undefined);
-
-// // Define the props for the provider
-// type CurrentUserProviderProps = {
-//   children: ReactNode;
-// };
-
-// export const CurrentUserProvider: React.FC<CurrentUserProviderProps> = ({
-//   children,
-// }) => {
-//   const [currentUser, setCurrentUser] = useState<User>({
-//     id: 0,
-//     name: "Anonymous",
-//     url: "",
-//   });
-
-//   const fetchCurrentUser = async () => {
-//     // let response = await fetch("/api/users/current");
-//     // const user = await response.json();
-//     const user = { id: 1233, name: "yossef", url: "" };
-//     setCurrentUser(user);
-//   };
-
-//   return (
-//     <CurrentUserContext.Provider value={{ currentUser, fetchCurrentUser }}>
-//       {children}
-//     </CurrentUserContext.Provider>
-//   );
-// };
-
-// export const useCurrentUser = (): CurrentUserContextType => {
-//   const context = useContext(CurrentUserContext);
-//   if (context === undefined) {
-//     throw new Error("useCurrentUser must be used within a CurrentUserProvider");
-//   }
-//   return context;
-// };
 import React, { createContext, useState, ReactNode, useContext } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  userName: string;
-  userId: string;
+  userName: string | null;
+  userId: string | null;
   login: (usrId: string, usrName: string) => void;
   logout: () => void;
 }
@@ -68,24 +13,30 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>("");
-  const [userId, setUserId] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+    localStorage.getItem("userId") ? true : false
+  );
+  const [userName, setUserName] = useState<string | null>(
+    localStorage.getItem("userName") ? localStorage.getItem("userName") : null
+  );
+  const [userId, setUserId] = useState<string | null>(
+    localStorage.getItem("userId") ? localStorage.getItem("userId") : null
+  );
 
-  const login = (usrId: string, usrName: string) => {
+  const login = () => {
     setIsAuthenticated(true);
-    setUserId(usrId);
-    setUserName(usrName);
+    setUserId(localStorage.getItem("userId"));
+    setUserName(localStorage.getItem("userName"));
   };
   const logout = () => {
     setIsAuthenticated(false);
-    setUserId("");
-    setUserName("");
+    setUserId(null);
+    setUserName(null);
   };
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, userName, userId, login, logout }}
+      value={{ isAuthenticated, userId, userName, login, logout }}
     >
       {children}
     </AuthContext.Provider>

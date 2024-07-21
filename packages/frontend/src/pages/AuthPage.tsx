@@ -41,8 +41,7 @@ const AuthPage: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      const { userId, userName } = await loginBasic(email, password);
-      login(userId, userName);
+      await loginBasic(email, password);
       navigate("/");
       alert("Logged in successfully!");
     } catch (error) {
@@ -69,8 +68,7 @@ const AuthPage: React.FC = () => {
 
   const handleGoogleLogin = async (credentialResponse: CredentialResponse) => {
     try {
-      const { userId, userName } = await loginGoogle(credentialResponse);
-      login(userId, userName);
+      await loginGoogle(credentialResponse);
       navigate("/");
       alert("Logged in with Google!");
     } catch (error) {

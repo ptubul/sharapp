@@ -5,6 +5,7 @@ import express from "express";
 import authRouter from "./routes/auth_routes";
 import mongoose from "mongoose";
 import postsRouter from "./routes/posts_routes";
+import userRouter from "./routes/user_routes";
 import commentsRouter from "./routes/comments_routes";
 import upload from "./middlewares/multer";
 import cors from "cors";
@@ -23,8 +24,6 @@ mongoose.connect(url).then(() => {
     optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
   };
 
-  // Use CORS middleware with options
-
   const app = express();
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
@@ -32,6 +31,7 @@ mongoose.connect(url).then(() => {
   app.use(cors(corsOptions));
   app.use("/auth", authRouter);
   app.use("/posts", postsRouter);
+  app.use("/user", userRouter);
   app.use("/comments", commentsRouter);
   app.listen(3000, () => console.log("app is listening"));
 });

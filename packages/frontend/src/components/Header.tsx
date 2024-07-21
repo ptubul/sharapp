@@ -36,6 +36,11 @@ function Header() {
     switch (event.currentTarget.innerText) {
       case "My jokes": {
         navigate("/myJokes");
+        break;
+      }
+      case "Profile": {
+        navigate("/profile");
+        break;
       }
     }
     handleCloseUserMenu;

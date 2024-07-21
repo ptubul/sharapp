@@ -3,6 +3,8 @@ import { Schema, model, Document } from "mongoose";
 export interface UserModel extends Document {
   email: string;
   password: string;
+  name: string;
+  imgPath: string;
   refreshTokens?: string[];
 }
 
@@ -10,7 +12,9 @@ export interface UserModel extends Document {
 const userSchema = new Schema<UserModel>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  refreshTokens: { type: [String], requiredPaths: false },
+  refreshTokens: { type: [String] },
+  name: { type: String },
+  imgPath: { type: String },
 });
 
 // Create and export User model

@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/protectedRoute";
 import MyJokesPage from "./pages/myJokesPage";
 import { AuthProvider } from "./context/CurrentUserContext";
 import AuthPage from "./pages/AuthPage";
+import ProfilePage from "./pages/profilePage";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="/login" element={<AuthPage />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/profile" element={<HomePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/joke/:jokeId" element={<JokePage />} />
             <Route path="/myJokes" element={<MyJokesPage />} />
           </Route>
