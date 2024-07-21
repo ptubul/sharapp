@@ -69,7 +69,7 @@ export default function CommentForm({ submitHandler }: HandlerProps) {
             name="rating"
             aria-required
             value={rating}
-            onChange={(event, newValue) => {
+            onChange={(_event, newValue) => {
               setRating(newValue);
             }}
           />

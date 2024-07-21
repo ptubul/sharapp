@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // src/AuthPage.tsx
 import React, { useState, ChangeEvent } from "react";
 import {
@@ -23,7 +24,7 @@ const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { login, logout } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {

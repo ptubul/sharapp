@@ -34,8 +34,8 @@ export default function JokeForm({ submitHandler }: HandlerProps) {
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [imageUrl, setImageUrl] = React.useState(imgPlaceholder);
-  const [title, setTitle] = React.useState("");
-  const [jokeText, setJokeText] = React.useState("");
+  const [_title, _setTitle] = React.useState("");
+  const [_jokeText, _setJokeText] = React.useState("");
   const jokeId = "111111111";
 
   const handleRemoveClick = () => {
@@ -87,6 +87,7 @@ export default function JokeForm({ submitHandler }: HandlerProps) {
               text: formJson.text.toString(),
               title: formJson.title.toString(),
               image: file,
+              comments: [],
             };
             submitHandler(newJoke);
             handleClose();

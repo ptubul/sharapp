@@ -10,7 +10,6 @@ import ProtectedRoute from "./components/protectedRoute";
 import MyJokesPage from "./pages/myJokesPage";
 import { AuthProvider } from "./context/CurrentUserContext";
 import AuthPage from "./pages/AuthPage";
-import JokeCard from "./components/jokeCard";
 
 function App() {
   return (
