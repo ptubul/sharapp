@@ -1,8 +1,9 @@
 export interface Comment {
   _id?: string;
   text: string;
-  rate: number;
-  owner: string;
+  rating: number;
+  name: string | null;
+  ownerId: string | null;
 }
 
 export interface CommentHandler {

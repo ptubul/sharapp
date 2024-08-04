@@ -4,6 +4,7 @@ import { MongooseError } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 import { OAuth2Client } from "google-auth-library";
+import { AuthRequest } from "../middlewares/auth_middleware";
 
 const client = new OAuth2Client();
 const googleSignin = async (req: Request, res: Response) => {
@@ -54,34 +55,42 @@ const login = async (req: Request, res: Response) => {
 };
 
 const logout = async (req: Request, res: Response) => {
-  // const authHeader = req.headers["authorization"];
-  // const refreshToken = authHeader && authHeader.split(" ")[1]; // Bearer <token>
-  // if (refreshToken == null) return res.sendStatus(401);
-  // jwt.verify(
-  //   refreshToken,
-  //   process.env.JWT_REFRESH_SECRET as Secret,
-  //     (err, decoded:string) => {
-  //      console.log(err);
-  //      if (err) throw new Error('401');
-  //     const userDb = await User.findOne({ _id: decoded});
-  //     if(!userDb) return
-  //       if (
-  //         !userDb.refreshTokens ||
-  //         !userDb.refreshTokens.includes(refreshToken)
-  //       ) {
-  //         userDb.refreshTokens = [];
-  //         await userDb.save();
-  //          res.sendStatus(401);
-  //       } else {
-  //         userDb.refreshTokens = userDb.refreshTokens.filter(
-  //           (t) => t !== refreshToken
-  //         );
-  //         await userDb.save();
-  //         res.sendStatus(200);
-  //       }
-  //     }
-  //   }
-  // );
+  console.log(req.headers);
+  const authHeader = req.headers["authorization"];
+  const refreshToken = authHeader && authHeader.split(" ")[1]; // Bearer <token>
+  console.log(refreshToken);
+  if (refreshToken == null) return res.sendStatus(401);
+
+  jwt.verify(
+    refreshToken,
+    process.env.JWT_REFRESH_SECRET as Secret,
+    async (err, user) => {
+      console.log(err?.message);
+      if (err) return res.sendStatus(401);
+      try {
+        const myUser = user as JwtPayload;
+        const userId = myUser["_id"];
+        const userDb = await User.findOne({ _id: userId });
+        if (!userDb) return res.sendStatus(401);
+        if (
+          !userDb.refreshTokens ||
+          !userDb.refreshTokens.includes(refreshToken)
+        ) {
+          userDb.refreshTokens = [];
+          await userDb.save();
+          return res.sendStatus(401);
+        } else {
+          userDb.refreshTokens = userDb.refreshTokens.filter(
+            (t) => t !== refreshToken
+          );
+          await userDb.save();
+          return res.sendStatus(200);
+        }
+      } catch (err) {
+        res.sendStatus(401).send(err);
+      }
+    }
+  );
 };
 
 const register = async (req: Request, res: Response) => {
@@ -139,7 +148,38 @@ const genTokens = async (user: UserModel) => {
 // }
 
 const refresh = async (req: Request, res: Response) => {
-  console.log("aaaaaaaaaaa");
+  // const refreshToken = extractToken(req);
+  // if (refreshToken == null) {
+  //   return res.sendStatus(401);
+  // }
+  // try {
+  //   jwt.verify(
+  //     refreshToken,
+  //     process.env.TOKEN_SECRET,
+  //     async (err, data: jwt.JwtPayload) => {
+  //       if (err) {
+  //         return res.sendStatus(403);
+  //       }
+  //       const user = await User.findOne({ _id: data._id });
+  //       if (user == null) {
+  //         return res.sendStatus(403);
+  //       }
+  //       if (!user.tokens.includes(refreshToken)) {
+  //         user.tokens = [];
+  //         await user.save();
+  //         return res.sendStatus(403);
+  //       }
+  //       user.tokens = user.tokens.filter((token) => token !== refreshToken);
+  //       const tokens = await generateTokens(user);
+  //       if (tokens == null) {
+  //         return res.status(400).send("Error generating tokens");
+  //       }
+  //       return res.status(200).send(tokens);
+  //     }
+  //   );
+  // } catch (err) {
+  //   return res.status(400).send(err.message);
+  // }
 };
 
 export default {

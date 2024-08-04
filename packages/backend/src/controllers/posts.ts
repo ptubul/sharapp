@@ -1,27 +1,32 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import Post from "../models/post_model";
-import { AuthResquest } from "../middlewares/auth_middleware";
+import { AuthRequest } from "../middlewares/auth_middleware";
+import User from "../models/user_model";
 
-const addPost = async (req: Request, res: Response) => {
+const addPost = async (req: AuthRequest, res: Response) => {
   let imgUrl: string | null = null;
-  console.log(req.body);
   if (req.file) {
     imgUrl = `${req.file.path}`;
     imgUrl = imgUrl.replace(/\\/g, "/");
   }
 
-  await Post.create({
-    title: req.body.title,
-    text: req.body.text,
-    // owner: req.user?._id,
-    owner: "111111111111111",
-    url: imgUrl,
-  });
+  const currentUser = await User.findById({ _id: req.user?._id });
 
-  return res.sendStatus(200);
+  if (currentUser) {
+    await Post.create({
+      title: req.body.title,
+      text: req.body.text,
+      ownerId: req.user?._id,
+      owner: currentUser.name,
+      url: imgUrl,
+      comments: [],
+    });
+  }
+
+  return res.status(200).send("Created");
 };
 
-const updatePost = async (req: AuthResquest, res: Response) => {
+const updatePost = async (req: AuthRequest, res: Response) => {
   const updatedPost = await Post.findOne({
     _id: req.params.id,
     owner: req.user?._id,
@@ -35,12 +40,12 @@ const updatePost = async (req: AuthResquest, res: Response) => {
   }
 };
 
-const deletePost = async (req: AuthResquest, res: Response) => {
+const deletePost = async (req: AuthRequest, res: Response) => {
   const delPost = await Post.findOne({
     _id: req.params.id,
     owner: req.user?._id,
   });
-
+  console.log(req.user?._id);
   if (delPost) {
     await Post.deleteOne({ _id: req.params.id });
     return res.status(200).send("delete");
@@ -49,12 +54,17 @@ const deletePost = async (req: AuthResquest, res: Response) => {
   }
 };
 
-const getAllPosts = async (req: Request, res: Response) => {
+const getAllPosts = async (req: AuthRequest, res: Response) => {
   const allPost = await Post.find({});
   return res.status(200).send(allPost);
 };
 
-const getPost = async (req: Request, res: Response) => {
+const getMyPosts = async (req: AuthRequest, res: Response) => {
+  const allPost = await Post.find({ owner: req.user?._id });
+  return res.status(200).send(allPost);
+};
+
+const getPost = async (req: AuthRequest, res: Response) => {
   const specPost = await Post.findOne({
     _id: req.params.id,
   });
@@ -67,5 +77,6 @@ export default {
   deletePost,
   updatePost,
   getAllPosts,
+  getMyPosts,
   getPost,
 };

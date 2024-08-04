@@ -4,22 +4,19 @@ import BasicGrid from "../components/grid";
 import JokeForm from "../components/jokeForm";
 import { Joke } from "../types/jokeTypes";
 import { Typography } from "@mui/material";
-import { createJoke } from "../services/postServices";
+import { createJoke, getMyJokes } from "../services/postServices";
 
 const MyJokesPage = () => {
-  const [jokes, setJokes] = useState<Joke[]>([
-    {
-      title: "aaa",
-      text: "bbbbb",
-      _id: "1",
-      url: "https://play-lh.googleusercontent.com/kCuoLGcYqdmZN_TvKVYrUjuF2C8uua2rfY83anNJw7YGzijReQc3yTlsqzvMdxs03IM=w240-h480-rw",
-      comments: [],
-    },
-  ]);
+  const [jokes, setJokes] = useState<Joke[]>([]);
 
   useEffect(() => {
-    // create an api
-  }, [jokes]);
+    const fetchData = async () => {
+      const givenJokes = await getMyJokes();
+      setJokes(givenJokes);
+    };
+
+    fetchData();
+  }, []);
 
   const addJokeHandler = async (joke: Joke) => {
     await createJoke(joke);

@@ -5,7 +5,7 @@ const storage = multer.diskStorage({
     let uploadPath = "public/";
 
     // Customize the upload path based on the endpoint
-    if (req.originalUrl.includes("/profile/")) {
+    if (req.originalUrl.includes("/user")) {
       uploadPath = "public/avatar/";
     } else if (req.originalUrl.includes("/posts")) {
       uploadPath = "public/posts/";
@@ -23,6 +23,12 @@ const storage = multer.diskStorage({
     cb(null, customFileName);
   },
 });
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fieldSize: 2 * 1024 * 1024, // 2 MB limit for each field
+    fileSize: 20 * 1024 * 1024, // 20 MB limit for file uploads
+  },
+});
 
 export default upload;

@@ -1,11 +1,12 @@
 import { Comment } from "./commentTypes";
 
 export interface Joke {
-  _id: string | null;
-  title?: string;
-  text?: string;
+  _id?: string | null;
+  title: string;
+  text: string;
   url?: string;
-  owner: string;
+  owner?: string | null;
+  ownerId: string | null;
   image?: File | null;
   comments: Comment[];
 }

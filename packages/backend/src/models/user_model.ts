@@ -3,7 +3,7 @@ import { Schema, model, Document } from "mongoose";
 export interface UserModel extends Document {
   email: string;
   password: string;
-  name: string;
+  name?: string;
   imgPath: string;
   refreshTokens?: string[];
 }
@@ -13,7 +13,7 @@ const userSchema = new Schema<UserModel>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   refreshTokens: { type: [String] },
-  name: { type: String },
+  name: { type: String, required: false },
   imgPath: { type: String },
 });
 

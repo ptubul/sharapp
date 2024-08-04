@@ -26,7 +26,7 @@ mongoose.connect(url).then(() => {
 
   const app = express();
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({ extended: true, limit: "20mb" }));
   app.use(express.json({ limit: "20mb" }));
   app.use(upload.single("image"));
   app.use(cors(corsOptions));

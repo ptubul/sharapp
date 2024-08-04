@@ -1,7 +1,8 @@
 import { Email } from "@mui/icons-material";
-import { userData } from "../types/userTypes";
+import { UserData } from "../types/userTypes";
 import axiosInstance from "./apiClient";
 import { CredentialResponse } from "@react-oauth/google";
+import axios from "axios";
 
 const loginBasic = async (email: string, password: string): Promise<void> => {
   const data = { email: email, password: password };
@@ -32,26 +33,51 @@ const loginGoogle = async (
   localStorage.setItem("userName", response.data.userName);
 };
 
-const getUser = async (): Promise<userData> => {
+const logout = async (): Promise<void> => {
+  console.log(localStorage.getItem("refreshToken"));
+
+  await axios.post(
+    "http://localhost:3000/auth/logout",
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
+      },
+    }
+  );
+
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("userName");
+};
+
+const getUser = async (): Promise<UserData> => {
   const user = await axiosInstance.get("/user");
   return user.data;
 };
 
-const updateUser = async (userData: userData): Promise<userData> => {
+const updateUser = async (userData: UserData): Promise<UserData> => {
   const formData = new FormData();
   formData.append("image", userData.image);
-  formData.append(
-    "json",
-    JSON.stringify({
-      data: { email: userData.email, name: userData.name },
-    })
+  // formData.append(
+  //   "json",
+  //   JSON.stringify({
+  //     data: { email: userData.data.email, name: userData.data.name },
+  //   })
+  // );
+  console.log(formData);
+  // const user = await axiosInstance.put("/user", formData);
+  const user = await axiosInstance.put(
+    "/user",
+    { image: userData.image },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
   );
-  const user = await axiosInstance.put("/user", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
   return user.data;
 };
 
-export { loginBasic, registerBasic, loginGoogle, getUser, updateUser };
+export { logout, loginBasic, registerBasic, loginGoogle, getUser, updateUser };

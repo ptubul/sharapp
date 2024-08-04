@@ -14,6 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../services/userServices";
 
 // const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "My jokes", "Dashboard", "Logout"];
@@ -40,6 +41,11 @@ function Header() {
       }
       case "Profile": {
         navigate("/profile");
+        break;
+      }
+      case "Logout": {
+        logout();
+        navigate("/login");
         break;
       }
     }

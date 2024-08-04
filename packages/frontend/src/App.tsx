@@ -11,6 +11,7 @@ import MyJokesPage from "./pages/myJokesPage";
 import { AuthProvider } from "./context/CurrentUserContext";
 import AuthPage from "./pages/AuthPage";
 import ProfilePage from "./pages/profilePage";
+import PostPage from "./components/jokeCardExt";
 
 function App() {
   return (

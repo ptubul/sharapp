@@ -1,8 +1,9 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import Post, { CommentModel } from "../models/post_model";
 import { v4 as uuidv4 } from "uuid";
+import { AuthRequest } from "../middlewares/auth_middleware";
 
-const addComment = async (req: Request, res: Response) => {
+const addComment = async (req: AuthRequest, res: Response) => {
   const editedPost = await Post.findById({ _id: req.body.postId });
 
   const comment: CommentModel = { ...req.body.comment, _id: uuidv4() };

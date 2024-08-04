@@ -34,9 +34,9 @@ export default function JokeForm({ submitHandler }: HandlerProps) {
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [imageUrl, setImageUrl] = React.useState(imgPlaceholder);
-  const [_title, _setTitle] = React.useState("");
-  const [_jokeText, _setJokeText] = React.useState("");
-  const jokeId = "111111111";
+  const [title, setTitle] = React.useState("");
+  const [jokeText, setJokeText] = React.useState("");
+  // const jokeId = ;
 
   const handleRemoveClick = () => {
     setImageUrl(imgPlaceholder);
@@ -82,15 +82,17 @@ export default function JokeForm({ submitHandler }: HandlerProps) {
               (formData as FormData).entries()
             );
 
-            const newJoke: Joke = {
-              _id: jokeId,
-              text: formJson.text.toString(),
-              title: formJson.title.toString(),
-              image: file,
-              comments: [],
-            };
-            submitHandler(newJoke);
-            handleClose();
+            {
+              const newJoke: Joke = {
+                comments: [],
+                ownerId: localStorage.getItem("userId"),
+                text: formJson.text.toString(),
+                title: formJson.title.toString(),
+                image: file,
+              };
+              submitHandler(newJoke);
+              handleClose();
+            }
           },
         }}
       >
