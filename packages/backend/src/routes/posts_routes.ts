@@ -3,7 +3,7 @@ import { Router } from "express";
 import authMiddleware from "../middlewares/auth_middleware";
 
 const router = Router();
-
+router.post("/new", authMiddleware, posts.addPost);
 router.post("/", authMiddleware, posts.addPost);
 router.delete("/:id", authMiddleware, posts.deletePost);
 router.put("/:id", authMiddleware, posts.updatePost);
