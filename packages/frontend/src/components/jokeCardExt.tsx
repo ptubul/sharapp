@@ -24,6 +24,7 @@ import { deleteJoke, getJoke } from "../services/postServices";
 import { Joke } from "../types/jokeTypes";
 import { useNavigate, useParams } from "react-router-dom";
 import { createComment } from "../services/commentsServices";
+import placeHolder from "../assets/pngwing.com.png";
 
 const PostPage: React.FC = () => {
   const defaultComment = {
@@ -40,7 +41,7 @@ const PostPage: React.FC = () => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [post, setPost] = useState<Joke>({
     _id: "",
-    url: "https://via.placeholder.com/400x200",
+    url: "../assets/pngwing.com.png",
     owner: "",
     title: "Post Title",
     text: "Post text goes here. This is a sample post.",
@@ -143,8 +144,12 @@ const PostPage: React.FC = () => {
           <Box sx={{ position: "relative" }}>
             <CardMedia
               component="img"
-              height="200"
-              image={post.photo}
+              height="300"
+              src={
+                post.url
+                  ? `http://localhost:3000/postsImages/${post.url}`
+                  : placeHolder
+              }
               alt="Post Image"
             />
             <Box
@@ -156,9 +161,9 @@ const PostPage: React.FC = () => {
                 flexDirection: "column",
               }}
             >
-              <IconButton color="primary" onClick={handleEditClick}>
+              {/* <IconButton color="primary" onClick={handleEditClick}>
                 <EditIcon />
-              </IconButton>
+              </IconButton> */}
               <IconButton color="error" onClick={handleDeleteClick}>
                 <DeleteIcon />
               </IconButton>

@@ -60,12 +60,6 @@ const getUser = async (): Promise<UserData> => {
 const updateUser = async (userData: UserData): Promise<UserData> => {
   const formData = new FormData();
   formData.append("image", userData.image);
-  // formData.append(
-  //   "json",
-  //   JSON.stringify({
-  //     data: { email: userData.data.email, name: userData.data.name },
-  //   })
-  // );
   console.log(formData);
   // const user = await axiosInstance.put("/user", formData);
   const user = await axiosInstance.put(

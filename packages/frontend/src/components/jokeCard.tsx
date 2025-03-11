@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import { Box, CardActionArea } from "@mui/material";
 import { Joke } from "../types/jokeTypes";
 import { useNavigate } from "react-router-dom";
+import placeHolder from "../assets/pngwing.com.png";
 
 interface JokeCardProps {
   joke: Joke;
@@ -38,8 +39,18 @@ export default function JokeCard({ joke, isSingle = false }: JokeCardProps) {
         }}
       >
         <CardActionArea onClick={() => navigate(`/joke/${joke._id}`)}>
-          <Typography>{joke.owner}:</Typography>
-          <CardMedia component="img" height="190" image={joke.url} alt="joke" />
+          {/* <Typography>{joke.owner}:</Typography> */}
+          <CardMedia
+            component="img"
+            height="190"
+            // image={joke.url}
+            src={
+              joke.url
+                ? `http://localhost:3000/postsImages/${joke.url}`
+                : placeHolder
+            }
+            alt="joke"
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {joke.title}

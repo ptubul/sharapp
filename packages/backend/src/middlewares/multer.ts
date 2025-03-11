@@ -1,16 +1,17 @@
 import multer from "multer";
-
+import path from "path";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     let uploadPath = "public/";
 
+    console.log(req.originalUrl);
     // Customize the upload path based on the endpoint
     if (req.originalUrl.includes("/user")) {
       uploadPath = "public/avatar/";
     } else if (req.originalUrl.includes("/posts")) {
-      uploadPath = "public/posts/";
+      uploadPath = path.join(__dirname, "../../public/postsImages/");
     }
-
+    console.log(uploadPath);
     cb(null, uploadPath);
   },
   filename: function (req, file, cb) {

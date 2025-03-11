@@ -9,7 +9,7 @@ import userRouter from "./routes/user_routes";
 import commentsRouter from "./routes/comments_routes";
 import upload from "./middlewares/multer";
 import cors from "cors";
-
+import path from "path";
 const db = mongoose.connection;
 db.once("open", () => console.log("DB connected"));
 db.on("error", (error) => console.error(error));
@@ -23,12 +23,22 @@ mongoose.connect(url).then(() => {
     allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
     optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
   };
-
   const app = express();
   app.use(express.json());
   app.use(express.urlencoded({ extended: true, limit: "20mb" }));
   app.use(express.json({ limit: "20mb" }));
-  app.use(upload.single("image"));
+  app.use(upload.single("file"));
+
+  app.use(
+    "/postsImages",
+    express.static(
+      path.join(
+        "C:\\Users\\97254\\Documents\\final\\sharapp\\packages\\backend",
+        "public",
+        "postsImages"
+      )
+    )
+  );
   app.use(cors(corsOptions));
   app.use("/auth", authRouter);
   app.use("/posts", postsRouter);

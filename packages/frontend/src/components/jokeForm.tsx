@@ -30,7 +30,7 @@ interface HandlerProps {
 }
 
 export default function JokeForm({ submitHandler }: HandlerProps) {
-  const imgPlaceholder = "https://via.placeholder.com/300x200";
+  const imgPlaceholder = "../assets/pngwing.com.png";
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [imageUrl, setImageUrl] = React.useState(imgPlaceholder);

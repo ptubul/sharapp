@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 export interface CommentModel {
-  _id: object;
+  _id: mongoose.Schema.Types.ObjectId;
   name: string;
   text: string;
   rating: number;
@@ -18,10 +18,10 @@ export interface PostModel extends Document {
 }
 
 const commentSchema = new Schema<CommentModel>({
-  _id: { type: Object, required: true, unique: true },
-  name: { type: String, required: true },
-  rating: { type: Number, required: true },
-  text: { type: String, required: true },
+  _id: { type: mongoose.Schema.Types.ObjectId, required: true },
+  name: { type: String, required: false },
+  rating: { type: Number, required: false },
+  text: { type: String, required: false },
   ownerId: { type: String, required: false },
 });
 
@@ -31,7 +31,7 @@ const postSchema = new Schema<PostModel>({
   title: { type: String, required: true },
   text: { type: String, required: true },
   url: { type: String, required: false },
-  comments: { type: [commentSchema], required: false },
+  comments: { type: [commentSchema], default: [] },
 });
 
 const Post = model<PostModel>("Post", postSchema);

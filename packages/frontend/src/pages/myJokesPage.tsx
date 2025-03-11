@@ -19,8 +19,18 @@ const MyJokesPage = () => {
   }, []);
 
   const addJokeHandler = async (joke: Joke) => {
-    await createJoke(joke);
-    setJokes((prevState) => [...prevState, joke]);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result: any = await createJoke(joke);
+    console.log(result.data);
+
+    if (result)
+      setJokes((prevState) => [
+        ...prevState,
+        {
+          ...result.data.rest,
+          url: result.data.url,
+        },
+      ]);
   };
 
   return (

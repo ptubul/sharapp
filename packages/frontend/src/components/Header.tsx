@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../services/userServices";
 
 // const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "My jokes", "Dashboard", "Logout"];
+const settings = ["Profile", "My jokes", "Logout"];
 
 function Header() {
   const navigate = useNavigate();
